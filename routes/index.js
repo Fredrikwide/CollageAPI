@@ -6,11 +6,11 @@ const userValidationRules = require('../validation_rules/user');
 
 /* GET / */
 router.get('/', (req, res) => {
-	res.send({ status: 'you had me at EHLO' });
+	res.send({ status: 'testing 123' });
 });
 
-router.use('/authors', require('./authors'));
-router.use('/books', require('./books'));
+router.use('/albums', require('./albums'));
+router.use('/photos', require('./books'));
 
 // add ability to login and get JWT access-token and refresh token
 router.post('/login', authController.login);

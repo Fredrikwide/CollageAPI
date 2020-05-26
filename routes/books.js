@@ -1,20 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const bookController = require('../controllers/book_controller');
+const photoController = require('../controllers/photo_controller');
 
 /* Get all resources */
-router.get('/', bookController.index);
+router.get('/', photoController.index);
 
 /* Get a specific resource */
-router.get('/:bookId', bookController.show);
+router.get('/:photoId', photoController.show);
 
 /* Store a new resource */
-router.post('/', bookController.store);
+router.post('/', photoController.store);
 
 /* Update a specific resource */
-router.put('/:bookId', bookController.update);
+router.put('/:photoId', photoController.update);
 
 /* Destroy a specific resource */
-router.delete('/:bookId', bookController.destroy);
+router.delete('/:photoId', photoController.destroy);
 
 module.exports = router;

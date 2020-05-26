@@ -5,7 +5,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { matchedData, validationResult } = require('express-validator');
-const { Book, User } = require('../models');
+const { Photo, User } = require('../models');
 
 /**
  * Get authenticated user's profile
@@ -36,45 +36,73 @@ const getProfile = async (req, res) => {
 }
 
 /**
- * Get the authenticated user's books
+ * Get the authenticated user's Photos
  *
- * GET /books
+ * GET /Photos
  */
-const getBooks = async (req, res) => {
-	// query db for user and eager load the books relation
+const getPhotos = async (req, res) => {
+	// query db for user and eager load the Photos relation
 	let user = null;
 	try {
-		user = await User.fetchById(req.user.data.id, { withRelated: 'books' });
+		user = await User.fetchById(req.user.data.id, { withRelated: 'photos' });
 	} catch (err) {
 		console.error(err);
 		res.sendStatus(404);
 		return;
 	}
 
-	// get this user's books
-	const books = user.related('books');
+	// get this user's Photos
+	const photos = user.related('photos');
 
 	res.send({
 		status: 'success',
 		data: {
-			books,
+			photos,
 		},
 	});
 }
 
+
+/* get Albums */
+
+const getAlbums = async (req, res) => {
+	// query db for user and eager load the Photos relation
+	let user = null;
+	try {
+		user = await User.fetchById(req.user.data.id, { withRelated: 'albums' });
+	} catch (err) {
+		console.error(err);
+		res.sendStatus(404);
+		return;
+	}
+
+	// get this user's Photos
+	const albums = user.related('albums');
+
+	res.send({
+		status: 'success',
+		data: {
+			albums,
+		},
+	});
+}
+
+
+
+
 /**
- * Add a book to the authenticated user's collection
+ * Add a Photo to the authenticated user's collection
  *
- * POST /books
+ * POST /Photos
  * {
- *   "book_id": 4
+ *   "Photo_id": 4
  * }
  */
-const addBook = async (req, res) => {
+const addPhoto = async (req, res) => {
 	// Finds the validation errors in this request and wraps them in an object with handy functions
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
-		console.log("Add book to profile request failed validation:", errors.array());
+		console.log("Add Photo to profile request failed validation:", errors.array());
 		res.status(422).send({
 			status: 'fail',
 			data: errors.array(),
@@ -83,16 +111,16 @@ const addBook = async (req, res) => {
 	}
 
 	try {
-		// 1. get book to attach
-		const book = await Book.fetchById(req.body.book_id);
+		// 1. get Photo to attach
+		const Photo = await Photo.fetchById(req.body.Photo_id);
 
-		// 2. attach book to user (create a row in books_users for this book and user)
+		// 2. attach Photo to user (create a row in Photos_users for this Photo and user)
 
 		// 2.1. fetch User model
 		const user = await User.fetchById(req.user.data.id);
 
-		// 2.2. on User model, call attach() on the books() relation and pass the Book model
-		const result = await user.books().attach(book);
+		// 2.2. on User model, call attach() on the Photos() relation and pass the Photo model
+		const result = await user.Photos().attach(Photo);
 
 		// 2.3. Profit?
 		res.status(201).send({
@@ -103,7 +131,52 @@ const addBook = async (req, res) => {
 	} catch (error) {
 		res.status(500).send({
 			status: 'error',
-			message: 'Exception thrown when trying to add book to profile.',
+			message: 'Exception thrown when trying to add Photo to profile.',
+		});
+		throw error;
+	}
+}
+
+
+
+
+/* add album */
+
+
+const addAlbum = async (req, res) => {
+	// Finds the validation errors in this request and wraps them in an object with handy functions
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		console.log("Add album to profile request failed validation:", errors.array());
+		res.status(422).send({
+			status: 'fail',
+			data: errors.array(),
+		});
+		return;
+	}
+
+	try {
+		// 1. get Photo to attach
+		const Album = await Album.fetchById(req.body.Album_id);
+
+		// 2. attach Photo to user (create a row in Photos_users for this Photo and user)
+
+		// 2.1. fetch User model
+		const user = await User.fetchById(req.user.data.id);
+
+		// 2.2. on User model, call attach() on the Photos() relation and pass the Photo model
+		const result = await user.Albums().attach(Album);
+
+		// 2.3. Profit?
+		res.status(201).send({
+			status: 'success',
+			data: result,
+		});
+
+	} catch (error) {
+		res.status(500).send({
+			status: 'error',
+			message: 'Exception thrown when trying to add Album to profile.',
 		});
 		throw error;
 	}
@@ -166,7 +239,9 @@ const updateProfile = async (req, res) => {
 
 module.exports = {
 	getProfile,
-	getBooks,
-	addBook,
+	getAlbums,
+	addAlbum,
+	getPhotos,
+	addPhoto,
 	updateProfile,
 }

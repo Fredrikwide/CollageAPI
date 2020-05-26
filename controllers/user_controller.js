@@ -29,7 +29,7 @@ const index = async (req, res) => {
  */
 const show = async (req, res) => {
 	const user = await new models.User({ id: req.params.userId })
-		.fetch({ withRelated: ['books'] });
+		.fetch({ withRelated: ['photos', 'albums'] });
 
 	res.send({
 		status: 'success',

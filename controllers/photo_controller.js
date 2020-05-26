@@ -26,7 +26,7 @@ const index = async (req, res) => {
  * GET /:bookId
  */
 const show = async (req, res) => {
-	const book = await models.Book.fetchById(req.params.bookId, { withRelated: ['author'] });
+	const book = await models.Book.fetchById(req.params.bookId, { withRelated: ['album'] });
 
 	res.send({
 		status: 'success',

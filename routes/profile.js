@@ -7,10 +7,14 @@ const profileValidationRules = require('../validation_rules/profile');
 router.get('/', profileController.getProfile);
 
 /* Get resource's books */
-router.get('/books', profileController.getBooks);
+router.get('/photos', profileController.getPhotos);
+
+/*get resource's albums */
+router.get('/albums', profileController.getAlbum);
+
 
 /* Add a book to this user's collection */
-router.post('/books', profileValidationRules.addBookRules, profileController.addBook);
+router.post('/photos', profileValidationRules.addPhotoRules, profileController.addPhoto);
 
 /* Update a specific resource */
 router.put('/', profileValidationRules.updateProfileRules, profileController.updateProfile);
