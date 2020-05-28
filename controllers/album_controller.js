@@ -10,12 +10,12 @@ const models = require('../models');
  * GET /
  */
 const index = async (req, res) => {
-	const all_authors = await models.Author.fetchAll();
+	const all_albums = await models.Album.fetchAll();
 
 	res.send({
 		status: 'success',
 		data: {
-			authors: all_authors
+			albums: all_albums
 		}
 	});
 }
@@ -23,16 +23,16 @@ const index = async (req, res) => {
 /**
  * Get a specific resource
  *
- * GET /:authorId
+ * GET /:albumId
  */
 const show = async (req, res) => {
-	const author = await new models.Author({ id: req.params.authorId })
-		.fetch({ withRelated: ['pictures'] });
+	const album = await new models.Album({ id: req.params.albumId })
+		.fetch({ withRelated: ['photos'] });
 
 	res.send({
 		status: 'success',
 		data: {
-			author,
+			album,
 		}
 	});
 }
@@ -52,7 +52,7 @@ const store = (req, res) => {
 /**
  * Update a specific resource
  *
- * POST /:authorId
+ * POST /:albumId
  */
 const update = (req, res) => {
 	res.status(405).send({

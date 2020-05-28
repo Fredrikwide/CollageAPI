@@ -10,12 +10,12 @@ const models = require('../models');
  * GET /
  */
 const index = async (req, res) => {
-	const all_books = await models.Book.fetchAll();
+	const all_photos = await models.Photo.fetchAll();
 
 	res.send({
 		status: 'success',
 		data: {
-			books: all_books
+			photos: all_photos
 		}
 	});
 }
@@ -23,15 +23,15 @@ const index = async (req, res) => {
 /**
  * Get a specific resource
  *
- * GET /:bookId
+ * GET /:photoId
  */
 const show = async (req, res) => {
-	const book = await models.Book.fetchById(req.params.bookId, { withRelated: ['album'] });
+	const photo = await models.Photo.fetchById(req.params.photoId, { withRelated: ['album'] });
 
 	res.send({
 		status: 'success',
 		data: {
-			book,
+			photo,
 		}
 	});
 }

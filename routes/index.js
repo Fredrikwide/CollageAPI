@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
 });
 
 router.use('/albums', require('./albums'));
-router.use('/photos', require('./books'));
+router.use('/photos', require('./photos'));
 
 // add ability to login and get JWT access-token and refresh token
 router.post('/login', authController.login);

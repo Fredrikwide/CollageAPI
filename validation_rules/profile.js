@@ -3,10 +3,10 @@
  */
 
 const { body } = require('express-validator');
-const { Book } = require('../models');
+const { Photo } = require('../models');
 
-const addBookRules = [
-	body('book_id').custom(value => Book.fetchById(value)),
+const addPhotoRules = [
+	body('photo_id').custom(value => Photo.fetchById(value)),
 ];
 
 const updateProfileRules = [
@@ -16,6 +16,6 @@ const updateProfileRules = [
 ];
 
 module.exports = {
-	addBookRules,
+	addPhotoRules,
 	updateProfileRules,
 }

@@ -76,7 +76,7 @@ const getAlbums = async (req, res) => {
 		return;
 	}
 
-	// get this user's Photos
+	// get this user's Albums
 	const albums = user.related('albums');
 
 	res.send({
