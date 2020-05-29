@@ -41,11 +41,36 @@ const show = async (req, res) => {
  *
  * POST /
  */
-const store = (req, res) => {
-	res.status(405).send({
-		status: 'fail',
-		message: 'Method Not Allowed.',
-	});
+const store = async (req, res) => {
+
+	try {
+
+		if (photo) {
+			const photo = await new models.Photo(req.body).save()
+
+			res.status(200).send({
+				status: 'success',
+				data: {
+					photo
+				}
+			});
+		}
+
+		res.status(404).send({
+			status: 'fail',
+			message: 'no photo could be added'
+		})
+
+	}
+	catch{
+		res.status(500).send({
+			status: 'error',
+			message: error.message
+		})
+	}
+
+
+
 }
 
 /**
