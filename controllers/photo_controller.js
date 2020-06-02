@@ -45,21 +45,14 @@ const store = async (req, res) => {
 
 	try {
 
-		if (photo) {
-			const photo = await new models.Photo(req.body).save()
+		const photo = await new models.Photo(req.body).save()
 
-			res.status(200).send({
-				status: 'success',
-				data: {
-					photo
-				}
-			});
-		}
+		console.log(req.body)
 
-		res.status(404).send({
-			status: 'fail',
-			message: 'no photo could be added'
-		})
+		res.status(200).send({
+			status: 'success',
+			message: 'photo added'
+		});
 
 	}
 	catch{

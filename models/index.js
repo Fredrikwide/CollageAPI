@@ -4,9 +4,9 @@ const knex = require('knex')({
 	connection: {
 		host: process.env.DB_HOST || 'localhost',
 		port: process.env.DB_PORT || 3306,
-		user: process.env.DB_USER || 'library',
+		user: process.env.DB_USER || 'root',
 		password: process.env.DB_PASSWORD || '',
-		database: process.env.DB_NAME || 'library',
+		database: process.env.DB_NAME || 'collage',
 	}
 });
 

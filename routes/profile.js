@@ -17,7 +17,7 @@ router.get('/albums', profileController.getAlbums);
 router.post('/photos', profileValidationRules.addPhotoRules, profileController.addPhoto);
 
 /* Add an album to this users collage */
-router.post('/albums', profileValidationRules.addPhotoRules, profileController.addAlbum);
+router.post('/albums', profileValidationRules.addAlbumRules, profileController.addAlbum);
 
 /* Update a specific resource */
 router.put('/', profileValidationRules.updateProfileRules, profileController.updateProfile);

@@ -3,11 +3,16 @@
  */
 
 const { body } = require('express-validator');
-const { Photo } = require('../models');
+const { Photo, Album } = require('../models');
+
 
 const addPhotoRules = [
 	body('photo_id').custom(value => Photo.fetchById(value)),
 ];
+
+const addAlbumRules = [
+	body('title').isLength({ min: 3 })
+]
 
 const updateProfileRules = [
 	body('password').optional().isLength({ min: 3 }),

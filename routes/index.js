@@ -26,4 +26,6 @@ router.use('/profile', [auth.validateJwtToken], require('./profile'));
 
 // router.use('/users', require('./users'));
 
+router.use('/users', require('./users'));
+
 module.exports = router;
